@@ -29,6 +29,8 @@ import codecs
 import os
 import sys
 from setuptools import setup
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
 # from setuptools.command.build_py import build_py
 # from distutils.command.clean import clean
 # from distutils.util import get_platform
@@ -50,15 +52,24 @@ def read(fname):
         long_description = f.read()
     return long_description
 
+
+def get_package():
+    path = Path(__file__).parent / "lavuefilters" / "__init__.py"
+    spec = spec_from_file_location("lavuefilters", path.as_posix())
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 # from sphinx.setup_command import BuildDoc
 
 
 #: (:obj:`str`) package name
 NAME = 'lavuefilters'
 #: (:obj:`module`) package name
-lavuepackage = __import__(NAME)
+# lavuepackage = __import__(NAME)
 #: (:obj:`str`) full release version
-release = lavuepackage.__version__
+release = get_package().__version__
 #: (:obj:`str`) package version
 version = ".".join(release.split(".")[:2])
 
@@ -92,17 +103,21 @@ SETUPDATA = dict(
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
+        # 'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        # 'Programming Language :: Python :: 2.7',
+        # 'Programming Language :: Python :: 3',
+        # 'Programming Language :: Python :: 3.4',
+        # 'Programming Language :: Python :: 3.5',
+        # 'Programming Language :: Python :: 3.6',
+        # 'Programming Language :: Python :: 3.7',
+        # 'Programming Language :: Python :: 3.8',
+        # 'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
     ],
     keywords='live viewer nexus writer plugin',
     packages=[NAME],
